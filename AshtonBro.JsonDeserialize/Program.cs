@@ -18,11 +18,9 @@ namespace AshtonBro.JsonDeserialize
 
             var jsonDeleteMethod = swaggerParce.JsonParseRemove(pathJsonFile, "/API-A/Login");
 
-
-            //File.WriteAllText($"{savePath}jsonRef.json", jsonRef);
+            File.WriteAllText($"{savePath}jsonRef.json", jsonRef);
             File.WriteAllText($"{savePath}jsonDeleteMethod.json", jsonDeleteMethod);
             File.WriteAllText($"{savePath}jsonOnlyMethod.json", jsonOnlyMethod);
         }
     }
 }
-

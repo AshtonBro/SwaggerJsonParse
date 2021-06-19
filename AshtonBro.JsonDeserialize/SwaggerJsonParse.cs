@@ -40,7 +40,7 @@ namespace AshtonBro.JsonDeserialize
                 {
                     var path = (string)GetRefObjectValue(refObj);
 
-                    var original = ResolveRef(root, path);
+                    var original = ReplaceRef(root, path);
 
                     if (original != null) refObj.Replace(original);
 
@@ -118,6 +118,8 @@ namespace AshtonBro.JsonDeserialize
 
             if (root is not JContainer container) return null;
 
+            var refs = container.Descendants().OfType<JObject>().Where(f => GetRefObjectValue(f) != null).ToList();
+
             if (!string.IsNullOrEmpty(methodName))
             {
                 var jMethods = container.Descendants()
@@ -135,21 +137,16 @@ namespace AshtonBro.JsonDeserialize
 
                         paths.Add(((JProperty)jMethod).Name, ((JProperty)jMethod).Value);
 
-                        return rootObj.ToString();
-                    }
-
-                    if (paths.Property(methodName) is not null)
-                    {
-
-                        var refs = paths.Property(methodName).Descendants().OfType<JObject>().Where(f => GetRefObjectValue(f) != null).ToList();
-
-                        paths.Property(methodName).Remove();
+                        var refsMethod = paths.Property(methodName).Descendants().OfType<JObject>().Where(f => GetRefObjectValue(f) != null).ToList().FirstOrDefault();
 
                         foreach (var refObj in refs)
                         {
-                            var path = (string)GetRefObjectValue(refObj);
+                            if (!JObject.DeepEquals(refsMethod, refObj))
+                            {
+                                var path = (string)GetRefObjectValue(refObj);
 
-                            DeleteRef(rootObj, path);
+                                DeleteRef(rootObj, path);
+                            }
                         }
 
                         return rootObj.ToString();
@@ -191,7 +188,7 @@ namespace AshtonBro.JsonDeserialize
         /// <param name="token">JToken Json file</param>
         /// <param name="path">The path taken from ref</param>
         /// <returns></returns>
-        static JToken ResolveRef(JToken token, string path)
+        static JToken ReplaceRef(JToken token, string path)
         {
             var components = path[2..].Split('/');
 
@@ -213,6 +210,11 @@ namespace AshtonBro.JsonDeserialize
             return token;
         }
 
+        /// <summary>
+        /// Delete component from ref path in json
+        /// </summary>
+        /// <param name="token">JToken Json file</param>
+        /// <param name="path">The path which ref remove</param>
         static void DeleteRef(JToken token, string path)
         {
             var components = path[2..].Split('/');
@@ -234,10 +236,6 @@ namespace AshtonBro.JsonDeserialize
 
                         objToket.Property(components.Last()).Remove();
                     }
-                }
-                else if (token is JArray array)
-                {
-                    token = token[int.Parse(component, NumberFormatInfo.InvariantInfo)];
                 }
                 else
                 {
