@@ -10,13 +10,13 @@ namespace AshtonBro.JsonDeserialize
 
             var savePath = @"#";
 
-            var swaggerParce = new SwaggerJsonParse();
+            var swaggerParse = new SwaggerJsonParse();
 
-            var jsonRef = swaggerParce.JsonParseRef(pathJsonFile);
+            var jsonRef = swaggerParse.JsonParseRef(pathJsonFile);
 
-            var jsonOnlyMethod = swaggerParce.JsonParseMethod(pathJsonFile, "/API-A/Login");
+            var jsonOnlyMethod = swaggerParse.JsonParseMethod(pathJsonFile, "/API-A/Login");
 
-            var jsonDeleteMethod = swaggerParce.JsonParseRemove(pathJsonFile, "/API-A/Login");
+            var jsonDeleteMethod = swaggerParse.JsonParseRemove(pathJsonFile, "/API-A/Login");
 
             File.WriteAllText($"{savePath}jsonRef.json", jsonRef);
             File.WriteAllText($"{savePath}jsonDeleteMethod.json", jsonDeleteMethod);
