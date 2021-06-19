@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "9DVI8qOdHGYSz77uzBx/Wp1qNLToZRs5TlFx3a+nppa9GCQCMvf7RyOiHCugQeyBiQgUh8cobI36XRCePi0ZKQ==",
+  "success": true,
+  "projectFilePath": "D:\\Web-developer\\3. С#\\VS_source\\AshtonBro.JsonDeserialize\\AshtonBro.JsonDeserialize\\AshtonBro.JsonDeserialize.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Evgenii Solovev\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}

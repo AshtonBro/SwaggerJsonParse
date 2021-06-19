@@ -1,0 +1,33 @@
+{
+  "/Homework/Get": {
+    "get": {
+      "tags": [
+        "Homework"
+      ],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Homework"
+            }
+          },
+          "text/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Homework"
+            }
+          },
+          "application/*+json": {
+            "schema": {
+              "$ref": "#/components/schemas/Homework"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Success"
+        }
+      }
+    }
+  }
+}
